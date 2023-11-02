@@ -3,6 +3,7 @@ import { isAdmin } from '../access/isAdmin';
 import { isAdminOrHasSiteAccessOrPublished } from '../access/isAdminHasSiteAccessOrPublished';
 import { isAdminOrHasSiteAccess } from '../access/isAdminOrHasSiteAccess';
 import { isLoggedIn } from '../access/isLoggedIn';
+import { User } from '../payload-types';
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -40,8 +41,8 @@ export const Pages: CollectionConfig = {
       required: true,
       // If user is not admin, set the site by default
       // to the first site that they have access to
-      defaultValue: ({ user }) => {
-        if (!user.roles.includes('admin') && user.sites?.[0]) {
+      defaultValue: ({ user }: { user: User }) => {
+        if (user.roles && !user.roles.includes('admin') && user.sites?.[0]) {
           return user.sites[0];
         }
       }
