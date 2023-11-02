@@ -1,15 +1,14 @@
 import { Payload } from "payload";
-import { User, Page, Site } from "./payload-types";
 
 export const seed = async (payload: Payload): Promise<void> => {
-  const site1 = await payload.create<Site>({
+  const site1 = await payload.create({
     collection: 'sites',
     data: {
       title: 'Site 1',
     }
   });
 
-  const site2 = await payload.create<Site>({
+  const site2 = await payload.create({
     collection: 'sites',
     data: {
       title: 'Site 2',
@@ -18,7 +17,7 @@ export const seed = async (payload: Payload): Promise<void> => {
 
   // Local API methods skip all access control by default
   // so we can easily create an admin user directly in init
-  await payload.create<User>({
+  await payload.create({
     collection: 'users',
     data: {
       email: 'dev@payloadcms.com',
@@ -30,7 +29,7 @@ export const seed = async (payload: Payload): Promise<void> => {
   })
 
   // This user will be created with the default role of `editor`
-  await payload.create<User>({
+  await payload.create({
     collection: 'users',
     data: {
       email: 'site1@payloadcms.com',
@@ -42,7 +41,7 @@ export const seed = async (payload: Payload): Promise<void> => {
   })
 
   // This page will be created and assigned to Site 1
-  await payload.create<Page>({
+  await payload.create({
     collection: 'pages',
     data: {
       _status: 'published',
@@ -61,7 +60,7 @@ export const seed = async (payload: Payload): Promise<void> => {
   })
 
   // This page will be created and assigned to Site 2
-  await payload.create<Page>({
+  await payload.create({
     collection: 'pages',
     data: {
       _status: 'published',
