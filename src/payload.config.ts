@@ -1,5 +1,7 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { Users } from './collections/Users';
 import { Sites } from './collections/Sites';
 import { Media } from './collections/Media';
@@ -18,9 +20,17 @@ export default buildConfig({
     Sites,
     Users,
   ],
+  editor: lexicalEditor({}),
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
+
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI,
+    },
+  }),
+
   onInit: async (payload) => {
     // If the `env` var `PAYLOAD_SEED` is set, seed the db
     if (process.env.PAYLOAD_SEED) {
